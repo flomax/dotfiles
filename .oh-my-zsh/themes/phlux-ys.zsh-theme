@@ -70,3 +70,4 @@ ${git_info} \
 %{$terminfo[bold]$fg[red]%}$ %{$reset_color%}"
 RPROMPT=%{${_lineup}%}"%{$fg[black]%} %* "%{${_linedown}%}
 
+
