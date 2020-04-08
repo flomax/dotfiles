@@ -17,6 +17,8 @@ source $ZSH/oh-my-zsh.sh
 ALIASFILE=~/.zsh/zshalias
 source $ALIASFILE
 
+MOZ_ENABLE_WAYLAND=1
+
 # CASE_SENSITIVE="true"
 # HYPHEN_INSENSITIVE="true"
 # DISABLE_AUTO_UPDATE="true"
