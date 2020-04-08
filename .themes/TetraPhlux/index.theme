@@ -1,0 +1,9 @@
+[X-GNOME-Metatheme]
+Name=TetraPhlux
+Type=X-GNOME-Metatheme
+Comment=Tetra/Adwaita-based theme with orange highlights and dark arc vibe.
+Encoding=UTF-8
+GtkTheme=TetraPhlux
+IconTheme=Adwaita
+CursorTheme=Adwaita
+CursorSize=24
