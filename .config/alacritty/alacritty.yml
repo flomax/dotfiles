@@ -18,8 +18,8 @@ window:
   # Specified in number of columns/lines, not pixels.
   # If both are `0`, this setting is ignored.
   dimensions:
-    columns: 163
-    lines: 43
+    columns: 170
+    lines: 45
 
   # Window position (changes require restart)
   #
@@ -94,7 +94,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: Ubuntu Mono
+    family: Cozette
 
     # The `style` can be specified to pick a specific face.
     style: Italic
@@ -105,7 +105,7 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Ubuntu Mono
+    family: Cozette
 
     # The `style` can be specified to pick a specific face.
     style: Bold Italic
@@ -116,7 +116,7 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Ubuntu Mono
+    family: Cozette
 
     # The `style` can be specified to pick a specific face.
     style: Italic
@@ -127,7 +127,7 @@ font:
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Ubuntu Mono
+    family: Cozette
 
     # The `style` can be specified to pick a specific face.
     style: Bold Italic
@@ -138,7 +138,7 @@ font:
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
   offset:
-   # x: 
+    x: 1
     y: 2
 
   # Glyph offset determines the locations of the glyphs within their cells with
