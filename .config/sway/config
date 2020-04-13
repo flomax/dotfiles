@@ -76,6 +76,9 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 #
+bindsym $mod+Tab workspace next_on_output
+bindsym $mod+Shift+Tab workspace prev_on_output
+#
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -122,13 +125,17 @@ bindsym $mod+minus scratchpad show
 #
 ##############################################################
 ##############################################################
-############----[  KEY BINDINGS  ]----########################
+############----[  INFO BAR  ]----########################
 #
-bar {
-font pango:Cozette 11
-position top
-status_command /usr/bin/bumblebee-status -m nic disk:home load cpu memory battery time date pasink "pasource dnf -p" interval=2.5 time.format="%H:%M CW %V" date.format="%a, %b %d %Y" -t gruvbox-powerline
-}
+#bar {
+#font Cozette 8
+#position top
+#status_command /usr/bin/bumblebee-status -m nic disk:home load cpu memory battery time date pasink "pasource dnf -p" interval=2.5 time.format="%H:%M CW %V" date.format="%a, %b %d %Y" -t gruvbox-powerline
+#}
+#
+exec_always ~/.config/waybar/waybar.sh
+#
+
 #
 #############################################################
 #############################################################
@@ -146,4 +153,5 @@ status_command /usr/bin/bumblebee-status -m nic disk:home load cpu memory batter
 #
 #############################################################
 #############################################################
+
 include /etc/sway/config.d/*
