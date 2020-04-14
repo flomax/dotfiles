@@ -1,0 +1,4 @@
+set ssl:verify-certificate no
+
+alias qdd queue mirror -c -P 2 --use-pget-n=9
+alias qdf queue pget -c -n 8

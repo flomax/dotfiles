@@ -58,7 +58,7 @@ local _linedown=$'\e[1B'
 # %{$terminfo[bold]$fg[black]%}${drawline}%{$reset_color%}\
 setopt promptsubst
  PROMPT="
-%{$terminfo[bold]$fg[brightblue]%}●%{$terminfo[bold]$fg[brightblue]%}»%{$terminfo[bold]$fg[blue]%}»%{$fg[black]%}»%{$reset_color%} \
+%{$terminfo[bold]$fg[brightblue]%}»%{$terminfo[bold]$fg[brightblue]%}»%{$terminfo[bold]$fg[blue]%}»%{$fg[black]%}»%{$reset_color%} \
 %{$terminfo[bold]$fg[yellow]%}%n%{$reset_color%}\
 %{$fg[blue]%} @ \
 %{$terminfo[bold]$fg[yellow]%}%m \
