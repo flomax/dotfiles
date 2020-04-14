@@ -103,6 +103,7 @@ font:
     family: Input
     style: Bold Italic
   # Point size
+
   size: 8
 
   # Offset is the extra space around each character. `offset.y` can be thought of
