@@ -8130,6 +8130,7 @@ overlay > box.vertical > paned.horizontal > box.vertical statusbar {
   border-style: solid;
 }
 
+
 .gedit-search-entry-occurrences-tag {
   background-color: transparent;
   background-image: none;
