@@ -18,6 +18,7 @@ set $menu ulauncher-toggle
 set $mod Mod4
 set $lock swaylock-fancy -p
 set $browser firefox-developer-edition
+set $screenoff $HOME/.config/sway/screenoff.sh
 set $files nemo
 #
 #############################################################
@@ -30,6 +31,7 @@ tap 			enabled
 natural_scroll 		disabled
 middle_emulation 	disabled
 }
+seat * hide_cursor 3300
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 #
 ##############################################################
@@ -37,11 +39,11 @@ middle_emulation 	disabled
 ############----[  WINDOWS & BORDERS  ]----###################
 #
 font pango:Cozette 10
-default_border pixel 	1
+default_border pixel 1 
 default_floating_border normal
 hide_edge_borders 	smart
 smart_gaps 		on
-gaps inner 		12
+gaps inner 		15
 #
 output * bg $wallpaper 	tile
 output eDP-1 resolution 1920x1080
@@ -61,11 +63,12 @@ bindsym $mod+shift+l exec $lock
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes, exit sway' 'swaymsg exit'
 bindsym $mod+f exec $browser
 #
-bindsym 0x1008ff03 exec brightnessctl s -100
-bindsym 0x1008ff02 exec brightnessctl s +100
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
-bindsym --locked XF86AudioMute exec --no-startup-id pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
+bindsym $mod+Ctrl+F2 exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
+bindsym $mod+Ctrl+F3 exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
+bindsym --locked $mod+Ctrl+F1 exec --no-startup-id pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
+bindsym $mod+Ctrl+F5 exec brightnessctl set 10%-
+bindsym $mod+Ctrl+F6 exec brightnessctl set 10%+
+bindsym $mod+Ctrl+F7 exec $screenoff
 #
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -109,6 +112,12 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 #
+bindsym Print workspace next_on_output
+bindsym $mod+bracketright gaps inner current plus 15px
+bindsym $mod+bracketleft gaps inner current minus 15px
+bindsym $mod+Shift+bracketright gaps outer current plus 15px
+bindsym $mod+Shift+bracketleft gaps outer current minus 15px
+#
 bindsym $mod+r mode "resize"
 mode "resize" {
 bindsym Left resize shrink width 	15px
@@ -118,6 +127,7 @@ bindsym Right resize grow width 	15px
 bindsym Return mode "default"
 bindsym Escape mode "default"
 }
+bindsym $mod+Shift+h floating toggle; resize set width 1640px height 840px
 #
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
@@ -125,7 +135,7 @@ bindsym $mod+minus scratchpad show
 #
 ##############################################################
 ##############################################################
-############----[  INFO BAR  ]----########################
+############----[  INFO BAR  ]----############################
 #
 #bar {
 #font Cozette 8
@@ -135,7 +145,18 @@ bindsym $mod+minus scratchpad show
 #
 exec_always ~/.config/waybar/waybar.sh
 #
-
+#
+#############################################################
+#############################################################
+#############----[  COLOUR CLASSES  ]----####################
+##
+# class                	 border   backgr.  text     indictr  child_border
+client.focused           1B2D46  be5046  be5046  1E4167  1C3554
+client.focused_inactive  5c6370  3b3228  ffffff  142B43  142334
+client.unfocused         5c6370  3b3228  ffffff  142B43  142334
+# #client.urgent         cb6077  3b3228  ffffff  cb6077  cb6077
+# #client.placeholder    000000  3b3228  ffffff  000000  0c0c0c
+#
 #
 #############################################################
 #############################################################

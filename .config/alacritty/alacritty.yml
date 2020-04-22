@@ -34,8 +34,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 20
-    y: 20
+    x: 25
+    y: 15
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
@@ -46,7 +46,7 @@ window:
   #     - full: Borders and title bar
   #     - none: Neither borders nor title bar
   #
-  decorations: full
+  decorations: none
 
   # Startup Mode (changes require restart)
   #
@@ -88,29 +88,29 @@ window:
 font:
   # Normal (roman) font face
   normal:
-    family: Input
+    family: Input Mono
     style: Italic
   # Bold font face
   bold:
-    family: Input
+    family: Input Mono
     style: Bold Italic
   # Italic font face
   italic:
-    family: Input
+    family: Input Mono
     style: Italic
   # Bold italic font face
   bold_italic:
-    family: Input
+    family: Input Mono
     style: Bold Italic
   # Point size
 
-  size: 8
+  size: 9.5 
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
   offset:
   #  x: 0
-    y: 1
+    y: 3 
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the right,
@@ -531,7 +531,7 @@ key_bindings:
 colors:
    # Default colors
    primary:
-     background: '#272931'
+     background: '#21232c'
      foreground: '#c5d3b8'
 
    # Normal colors
