@@ -4,13 +4,13 @@
     "height": 24, // Waybar height (to be removed for auto height)
     "width": 1920, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
     "modules-center": [],
-    "modules-right": [ "tray", "battery", "temperature", "pulseaudio", "network", "idle_inhibitor", "clock#date", "clock#time"],
+    "modules-right": [ "custom/spotify", "tray", "battery", "temperature", "pulseaudio", "network", "idle_inhibitor", "clock#date", "clock#time"],
     // Modules configuration
      "sway/workspaces": {
-         "disable-scroll": true,
-         "all-outputs": false,
+         "disable-scroll": false,
+         "all-outputs": true,
          "format": "{icon}",
          "format-icons": {
              "1": "1",
@@ -35,7 +35,7 @@
         }
      },
     "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
+        "format": "{}"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -45,7 +45,7 @@
         }
     },
     "custom/spotify": {
-        "format": "  {}",
+        "format": "{} ",
         "exec": "$HOME/.config/waybar/scripts/mediaplayer.py",
         "on-click": "$HOME/.config/waybar/scripts/toggle-play",
         "return-type": "json"
@@ -72,7 +72,7 @@
         // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 80,
         // "format-critical": "{temperatureC}°C {icon}",
-        "format": "{icon} {temperatureC}°",
+        "format": "{icon}  {temperatureC}°",
         "format-icons": ["", "", ""]
     },
     "backlight": {
@@ -87,7 +87,7 @@
             "warning": 20,
             "critical": 10
         },
-        "format":"{icon} {capacity}",
+        "format":"{icon}  {capacity}",
         "format-charging": " {capacity}",
         "format-plugged": "  {capacity}",
         "format-alt": "{icon} {time}",
@@ -98,12 +98,13 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": " {signalStrength}",
+        "format-wifi": "  {signalStrength}",
         "format-ethernet": "{ifname}: {ipaddr}/{cidr}",
         "format-linked": "{ifname} (No IP)",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{essid} - {ifname} - {ipaddr}"
-    },
+        },
+
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
         "format": "{icon}  {volume}",

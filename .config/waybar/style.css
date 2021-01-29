@@ -3,53 +3,79 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "Ubuntu", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 11px;
+    font-family:  "Gohu GohuFont", Roboto, Helvetica, Arial, sans-serif;
     min-height: 0;
+    padding: 0 6px;
 }
 
 window#waybar {
+    font-family:  "Misc Termsyn.Icons", sans-serif;
+    font-size: 10px;
     background: rgba(43, 48, 59, 0.3);
-    border-bottom: 3px solid transparent;
-    color: white;
+    color: grey;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#workspaces {
+    font-size: 10px;
+    padding: 0 10px;
 }
 
 #workspaces button {
-    padding: 0 8px;
-    margin: 0 5px;
-    color: white;
-    border-bottom: 1px solid transparent;
-    font-weight: bold;
+    font-size: 10px;
+    padding: 0 10px;
+    color: grey;
 }
 
+
 #workspaces button.focused {
+    font-size: 10px;
     background: rgba(100, 114, 125, 0.2);
-    border-bottom: 1px solid @color15;
+    color: silver;
 }
 
 #mode {
-    background: transparent;
-    border-bottom: 3px solid @color15;
+    font-family:  "Gohu GohuFont", sans-serif;
+    color: red;
+    padding: 1px 15px;
+    font-size: 10px;
+    background: rgba(43, 48, 59, 0.5);
+    border-left: 1px dotted red;
+    border-right: 1px dotted red;
+    border-bottom: 1px dotted red;
+    border-top: 1px dotted red;
 }
 
 #clock, #battery, #cpu, #memory, #network, #pulseaudio, #temperature, #backlight, #idle_inhibitor, #custom-sl, #custom-spotify {
-    padding: 0 6px;
-    margin: 0 5px;
+    padding: 1 6px;
+    margin: 1 5px;
 }
 
 #clock {
+    font-family:  "Gohu GohuFont", sans-serif;
     background-color: transparent;
     color: white;
-    font-weight: 900;
+    font-weight: 500;
+    font-size: 12px;
+}
+#clock.date {
+    font-family:  "Gohu GohuFont", sans-serif;
+    font-weight: 100;
+    color: silver;
+    font-size: 10px;
 }
 
 #battery {
-    color: white;
-    font-weight: 100;
+    color: grey;
+    font-weight: 300;
+    font-size: 9px;
 }
 
 #battery.charging {
-    color: white;
+    color: grey;
 }
 
 @keyframes blink {
@@ -60,7 +86,7 @@ window#waybar {
 
 #battery.warning:not(.charging) {
     background: #f53c3c;
-    color: white;
+    color: grey;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -71,19 +97,20 @@ window#waybar {
 #cpu {
     background: transparent;
     border-bottom: 3px solid @color5;
-    color: white;
+    color: grey;
 }
 
 #memory {
     background: transparent;
     border-bottom: 3px solid @color7;
-    color: white;
+    color: grey;
 }
 
 #network {
     background: transparent;
-    color: white;
+    color: grey;
     font-weight: 100;
+    font-size: 9px;
 }
 #network.disconnected {
     background: transparent;
@@ -92,21 +119,28 @@ window#waybar {
 
 #temperature {
     background: transparent;
-    color: white;
+    color: grey;
     font-weight: 100;
+    font-size: 9px;
 }
 
 #pulseaudio {
     background: transparent;
-    color: white;
+    color: grey;
     font-weight: 100;
+    font-size: 9px;
 }
 
 #pulseaudio.muted {
-    color: #950000;
+    color: #883636;
     background-color: rgba(119, 36, 36, 0.1);
 }
-
+#idle_inhibitor {
+    background: transparent;
+    color: grey;
+    font-weight: 100;
+    font-size: 9px;
+}
 #tray {
     background-color: transparent;
 }
@@ -128,10 +162,15 @@ window#waybar {
 }
 
 #custom-spotify.playing {
+    font-size: 10px;
+    font-weight: 100;
+    color: grey;   
     border-bottom: none;
-    border-bottom: 3px solid @color2;
 }
 
 #custom-spotify.paused {
-    border-bottom: 3px solid @color1;
+    font-size: 10px;
+    font-weight: 100;
+    color: grey;   
+    border-bottom: none;
 }
