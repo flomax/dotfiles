@@ -1,75 +1,104 @@
-###############---------------------------##################
-###############    SWAY CONFIG @flomax    ##################
-###############---------------------------##################
+#-----------------------------------------------------------
+#													       |
+#             ╔═╗╦ ╦╔═╗╦ ╦  ┌─┐┌─┐┌┐┌┌─┐┬┌─┐			   |
+#             ╚═╗║║║╠═╣╚╦╝  │  │ ││││├┤ ││ ┬			   |
+#             ╚═╝╚╩╝╩ ╩ ╩   └─┘└─┘┘└┘└  ┴└─┘			   |
+#   													   |	
+#-----------------------------------------------------------
 
+#-------------[  AUTOSTART APPLICATIONS  ]-----------------------------------
 
-#########----[  AUTOSTART APPLICATIONS  ]----###############
-#
 # xwayland disable
+# exec --no-startup-id flashfocus
+exec python $HOME/.config/sway/opaque.py
 exec ulauncher --hide-window --no-window-shadow
-#
-############################################################
-############################################################
-###########----[  VARIABLE SETTINGS  ]----##################
-#
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec mako
+
+#-----------------[  VARIABLE SETTINGS  ]-------------------------------------
+
+#seat seat0 xcursor_theme Dot-Light 0
 set $wallpaper $HOME/.wallpaper/tile-dark-01.png
-set $term alacritty
+set $term foot
+set $termcwd $HOME/.config/sway/alacwd.bash
 set $menu ulauncher-toggle
+#set $menu wofi --show drun --show-images
+#set $menu rofi -combi-modi drun,calc,emoji -show drun -modi combi -show-icons
 set $mod Mod4
-set $lock swaylock-fancy -p
+set $lock swaylock -F -C $HOME/.config/sway/swaylock/config
+set $volchange $HOME/.config/sway/volchange.sh
+set $screen180 $HOME/.config/sway/screen180.sh
+set $screen0 $HOME/.config/sway/screen0.sh
 set $browser firefox-developer-edition
 set $screenoff $HOME/.config/sway/screenoff.sh
 set $files nemo
-#
-#############################################################
-#############################################################
-############----[  INPUT & DEVICE CONFIGURATION  ]----#######
-#
+
+
+#------------------[  INPUT & DEVICE CONFIGURATION  ]--------------------------
+
 input "2:14:ETPS/2_Elantech_Touchpad" {
+click_method	button_areas
 dwt 			enabled
 tap 			enabled
+drag_lock 		disabled
 natural_scroll 		disabled
 middle_emulation 	disabled
 }
 seat * hide_cursor 3300
+
+input 1386:20554:Wacom_Pen_and_multitouch_sensor_Pen map_to_output eDP-1
 # You can get the names of your inputs by running: swaymsg -t get_inputs
-#
-##############################################################
-##############################################################
-############----[  WINDOWS & BORDERS  ]----###################
-#
-font pango:Cozette 10
+
+#-----------------[  WINDOWS & BORDERS  ]---------------------------------------
+
+font pango:Cozette 11
 default_border pixel 1 
 default_floating_border normal
 hide_edge_borders 	smart
-smart_gaps 		on
+smart_gaps 		off
+smart_borders		on
 gaps inner 		15
-#
+gaps outer 		5
+
 output * bg $wallpaper 	tile
 output eDP-1 resolution 1920x1080
+output HDMI-A-2 resolution 2550x1440
 #You can get the names of your outputs by running: swaymsg -t get_outputs
-#
-##############################################################
-##############################################################
-############----[  KEY BINDINGS  ]----########################
-#
+
+for_window [title="^Ulauncher | ^\*.*$"] title_format ""
+for_window [title="^Ulauncher | ^\*.*$"] border pixel 24
+for_window [app_id="pavucontrol"] floating enable, sticky enable, resize set width 750px height 550px
+for_window [class="Gpick"] floating enable, resize set width 950px height 680px
+for_window [app_id="eog"] floating enable, resize set width 1890px height 1030px
+for_window [app_id="gnome-calculator"] floating enable, resize set width 300px height 560px
+
+
+#-----------------[  KEY BINDINGS  ]--------------------------------------------
+
 bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $termcwd
 bindsym $mod+Escape kill
+bindsym $mod+q kill
 bindsym $mod+d exec $menu
+bindsym $mod+c exec $menu2
 floating_modifier $mod inverse
-bindsym $mod+Shift+c reload
-bindsym $mod+Shift+Delete exec wlogout
-bindsym $mod+shift+l exec $lock
-bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Home reload
+bindsym $mod+End exec wlogout
+bindsym $mod+Delete exec $lock
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Confirm to exit sway' -b 'Exit confirmed' 'swaymsg exit'
 bindsym $mod+f exec $browser
-#
-bindsym $mod+Ctrl+F2 exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
-bindsym $mod+Ctrl+F3 exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
-bindsym --locked $mod+Ctrl+F1 exec --no-startup-id pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
-bindsym $mod+Ctrl+F5 exec brightnessctl set 10%-
-bindsym $mod+Ctrl+F6 exec brightnessctl set 10%+
-bindsym $mod+Ctrl+F7 exec $screenoff
-#
+bindsym $mod+e exec $files
+bindsym $mod+F3 exec --no-startup-id $volchange volup
+bindsym $mod+F2 exec --no-startup-id $volchange voldown
+bindsym --locked $mod+F1 exec --no-startup-id $volchange volmute
+bindsym $mod+F5 exec brightnessctl set 10%-
+bindsym $mod+F6 exec brightnessctl set 10%+
+bindsym $mod+F7 exec $screenoff
+bindsym $mod+F11 exec $screen180
+bindsym $mod+Ctrl+F11 exec $screen0
+
+# bindsym $mod+Shift+d exec grim -g "$(slurp -p)" -t ppm - | convert - -format '%[pixel:p{0,0}]' txt:- | tail -n 1 | cut -d ' ' -f 4 | wl-copy
+
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
@@ -78,10 +107,10 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
-#
+
 bindsym $mod+Tab workspace next_on_output
 bindsym $mod+Shift+Tab workspace prev_on_output
-#
+
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -102,22 +131,28 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
-#
-bindsym $mod+b splith
-bindsym $mod+v splitv
-bindsym $mod+Shift+0x2c layout tabbed
-bindsym $mod+Shift+0x2f layout toggle split
-bindsym $mod+Shift+m fullscreen
-bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
+
+bindsym $mod+0x3b splith
+bindsym $mod+0x27 splitv
+bindsym $mod+0x2f fullscreen
+bindsym $mod+0x2c layout tabbed
+bindsym $mod+0x2e layout toggle split
+
+bindsym $mod+space floating toggle
+bindsym $mod+Shift+space floating toggle ; resize set width 1680px height 850px
+floating_modifier $mod normal
+bindsym $mod+Alt+space sticky toggle
+
+bindsym $mod+Ctrl+space focus mode_toggle
 bindsym $mod+a focus parent
-#
-bindsym Print workspace next_on_output
+
+bindsym Print workspace next
+bindsym $mod+Print workspace prev
 bindsym $mod+bracketright gaps inner current plus 15px
 bindsym $mod+bracketleft gaps inner current minus 15px
 bindsym $mod+Shift+bracketright gaps outer current plus 15px
 bindsym $mod+Shift+bracketleft gaps outer current minus 15px
-#
+
 bindsym $mod+r mode "resize"
 mode "resize" {
 bindsym Left resize shrink width 	15px
@@ -127,52 +162,27 @@ bindsym Right resize grow width 	15px
 bindsym Return mode "default"
 bindsym Escape mode "default"
 }
-bindsym $mod+Shift+h floating toggle; resize set width 1640px height 840px
-#
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show
-#
-#
-##############################################################
-##############################################################
-############----[  INFO BAR  ]----############################
-#
-#bar {
-#font Cozette 8
-#position top
-#status_command /usr/bin/bumblebee-status -m nic disk:home load cpu memory battery time date pasink "pasource dnf -p" interval=2.5 time.format="%H:%M CW %V" date.format="%a, %b %d %Y" -t gruvbox-powerline
-#}
-#
+
+bindsym $mod+Shift+h gaps outer current set 85px
+bindsym $mod+Shift+g gaps outer current set 5px 
+
+bindsym $mod+minus move scratchpad
+bindsym $mod+equal scratchpad show
+
+
+#-------------[  INFO BAR  ]---------------------------------------------------
+
 exec_always ~/.config/waybar/waybar.sh
-#
-#
-#############################################################
-#############################################################
-#############----[  COLOUR CLASSES  ]----####################
-##
+
+
+#-------------[  COLOUR CLASSES  ]---------------------------------------------
+
 # class                	 border   backgr.  text     indictr  child_border
-client.focused           1B2D46  be5046  be5046  1E4167  1C3554
-client.focused_inactive  5c6370  3b3228  ffffff  142B43  142334
-client.unfocused         5c6370  3b3228  ffffff  142B43  142334
+client.focused           29456B  29456b  80D9FF  1E4167  284872
+client.focused_inactive  20222C  20222C  494949  142B43  142334
+client.unfocused         20222C  20222C  494949  142B43  142334
 # #client.urgent         cb6077  3b3228  ffffff  cb6077  cb6077
 # #client.placeholder    000000  3b3228  ffffff  000000  0c0c0c
-#
-#
-#############################################################
-#############################################################
-############----[  IDLE MANAGEMENT  ]----####################
-#
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' \
-#               resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
-#
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
-#
-#############################################################
-#############################################################
+
 
 include /etc/sway/config.d/*
