@@ -22,7 +22,7 @@ set $browser firefox-developer-edition
 set $wallpaper $HOME/.wallpaper/tile-dark-01.png
 set $lock i3lock-fancy-rapid 45 50 pixel
 
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec_always --no-startup-id numlockx &
 exec_always --no-startup-id feh --no-fehbg --bg-tile $wallpaper &
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh &
 exec --no-startup-id dunst -config $HOME/.config/dunst/dunstrc &
@@ -32,8 +32,9 @@ exec --no-startup-id ulauncher --hide-window --no-window-shadow &
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-xsettings &
 exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=ssh,secrets,pkcs11 &
-#exec --no-startup-id mousetrap -t 1
-exec --no-startup-id unclutter -root
+#exec --no-startup-id mousetrap -t 1 &
+exec --no-startup-id unclutter -root &
+exec --no-startup-id xset s off -dpms &
 
 exec_always --no-startup-id i3-msg gaps inner all set 25
 exec_always --no-startup-id i3-msg gaps outer all set 25
@@ -153,6 +154,7 @@ bindsym $mod+j exec i3-msg gaps outer all set 65
 bindsym $mod+Shift+h gaps outer current set 85px
 bindsym $mod+Shift+g gaps outer current set 10px 
 bindsym $mod+Shift+y gaps inner current set 10px
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         bindsym Left resize shrink width 20 px
@@ -163,6 +165,7 @@ mode "resize" {
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
+        bindsym q mode "default"
         bindsym $mod+r mode "default"
 }
 bindsym $mod+r mode "resize"
@@ -192,17 +195,36 @@ for_window [window_type="menu"] floating enable
 for_window [urgent=latest] focus
 
 # Create Log out, Reboot, Poweroff bindings
-mode "(P)olybar  (I)3WM  (N)cmpcpp  (A)lacritty  Pi(c)om" {
+mode "(P)olybar  (I)3WM  (N)cmpcpp  (A)lacritty  Pi(c)om (Z)shalias" {
         bindsym p exec --no-startup-id alacritty -e micro ~/.config/polybar/config
         bindsym i exec --no-startup-id alacritty -e micro ~/.config/i3/config
         bindsym n exec --no-startup-id alacritty -e micro ~/.config/ncmpcpp/config
         bindsym a exec --no-startup-id alacritty -e micro ~/.config/alacritty/alacritty.yaml
         bindsym c exec --no-startup-id alacritty -e micro ~/.config/picom/picom.conf
+        bindsym z exec --no-startup-id alacritty -e micro ~/.zsh/zshalias
         bindsym q mode "default"
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-bindsym $mod+Shift+c mode "(P)olybar  (I)3WM  (N)cmpcpp  (A)lacritty  Pi(c)om"
+bindsym $mod+Shift+c mode "(P)olybar  (I)3WM  (N)cmpcpp  (A)lacritty  Pi(c)om (Z)shalias"
+
+
+mode "gaps" {
+	bindsym plus gaps inner all plus 10
+	bindsym Shift+plus gaps inner all plus 10
+	bindsym minus gaps inner all minus 10
+	bindsym Shift+minus gaps inner all minus 10
+
+	bindsym r gaps horizontal current set $side_gaps_on
+	bindsym s gaps horizontal current set $side_gaps_off
+	bindsym x gaps horizontal all set $side_gaps_on
+
+	# back to normal
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+plus mode "gaps"
 
 
 # Create Log out, Reboot, Poweroff bindings
