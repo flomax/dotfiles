@@ -1,31 +1,32 @@
-;====================================================================================================================
-;
-;
-;     ██████╗  ██████╗ ██╗    ██╗   ██╗██████╗  █████╗ ██████╗          ██████╗ ██╗      ██████╗ ██╗  ██╗██╗
-;     ██╔══██╗██╔═══██╗██║    ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗        ██╔═══██╗██║     ██╔═══██╗██║ ██╔╝██║
-;     ██████╔╝██║   ██║██║     ╚████╔╝ ██████╔╝███████║██████╔╝        ██║██╗██║██║     ██║   ██║█████╔╝ ██║
-;     ██╔═══╝ ██║   ██║██║      ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗        ██║██║██║██║     ██║   ██║██╔═██╗ ██║
-;     ██║     ╚██████╔╝███████╗  ██║   ██████╔╝██║  ██║██║  ██║        ╚█║████╔╝███████╗╚██████╔╝██║  ██╗██║
-;     ╚═╝      ╚═════╝ ╚══════╝  ╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝         ╚╝╚═══╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝                                                                                                     
-;
-;
-;====================================================================================================================
+;╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+;║																											  	║
+;║      ██████╗  ██████╗ ██╗    ██╗   ██╗██████╗  █████╗ ██████╗         										║
+;║      ██╔══██╗██╔═══██╗██║    ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗       										║
+;║      ██████╔╝██║   ██║██║     ╚████╔╝ ██████╔╝███████║██████╔╝       ┌─┐ ╔═╗╦ ╦ ╦ ╦  ╔╗ ╔═╗╔╦╗				║
+;║      ██╔═══╝ ██║   ██║██║      ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗       │└┘ ╠═╝╠═╣ ║ ║  ╠╩╗║ ║ ║				║
+;║      ██║     ╚██████╔╝███████╗  ██║   ██████╔╝██║  ██║██║  ██║       └── ╩  ╩ ╩ ╩ ╩═╝╚═╝╚═╝ ╩ 				║
+;║      ╚═╝      ╚═════╝ ╚══════╝  ╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝        										║
+;║                                                                                                              ║                 
+;╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 
 [colors]
 ;background = ${xrdb:color0:#222}
 background = #aa21242A
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
-foreground = #dfdfdf
+foreground = #dfadadad
 foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
+warn = #f66151
+
+;====================================================================================================================
 
 [bar/phli3]
-monitor = ${env:MONITOR:HDMI-0}
+monitor = ${env:MONITOR:DP-0}
 width = 100%
-height = 20
+height = 23
 offset-x = 0
 offset-y = 0
 radius = 0
@@ -40,22 +41,24 @@ line-color = #f00
 border-size = 0
 border-color = #00000000
 
-padding-left = 4
+padding-left = 5
 padding-right = 0
 
 module-margin-left = 1
-module-margin-right = 2
+module-margin-right = 1
 
-font-0 = Cantarell:pixelsize=9:style=Extra Bold;2
+font-0 = Cantarell:pixelsize=8:style=Extra Bold;2
 font-1 = Hack Nerd Font:pixelsize=10:style=Regular;2
-font-2 = tamzen:pixelsize=11.5:style=Regular;2
+font-2 = Gohu Gohufont:pixelsize=8:style=Regular;2
+font-3 = Gohu Gohufont:pixelsize=8:style=Bold;2
+font-4 = Gohu Gohufont:pixelsize=13:style=Bold;2
 
 modules-left = i3 xwindow
 modules-center = 
-modules-right = pulseaudio date
+modules-right = mpd playerctl wlan pulseaudio date time
 
 tray-position = right
-tray-padding = 12
+tray-padding = 15
 ;tray-background = #0063ff
 
 ;wm-restack = bspwm
@@ -63,20 +66,21 @@ wm-restack = i3
 
 ;override-redirect = true
 
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
 scroll-up = #i3.next
 scroll-down = #i3.prev
 
 cursor-click = default
 cursor-scroll = default
 
+;====================================================================================================================
+
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:60:...%
+label = %title:0:200:...%
 label-font = 3
+label-padding = 12
 
+;====================================================================================================================
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -94,6 +98,8 @@ label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
 label-indicator-underline = ${colors.secondary}
 
+;====================================================================================================================
+
 [module/filesystem]
 type = internal/fs
 interval = 25
@@ -104,6 +110,7 @@ label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
+;====================================================================================================================
 
 [module/i3]
 type = internal/i3
@@ -112,10 +119,10 @@ index-sort = true
 wrapping-scroll = false
 format-font = 3
 
-; Only show workspaces on the same output as the bar
+; Only show workspaces on the same output as the bar  
 ;pin-workspaces = true
 
-label-mode-padding = 3
+label-mode-padding = 2
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 format-mode-font = 3
@@ -124,41 +131,62 @@ format-mode-font = 3
 label-focused = %index%
 label-focused-background = ${colors.background-alt}
 label-focused-underline= ${colors.primary}
-label-focused-padding = 3
+label-focused-padding = 2
 format-focused-font = 3
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %index%
-label-unfocused-padding = 3
+label-unfocused-padding = 2
+format-unfocused-font = 3
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %index%
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
-label-visible-padding = ${self.label-focused-padding}
-label-visible-font = 3
+label-visible-padding = 2
+format-visible-font = 3
 
 ; urgent = Workspace with urgency hint set
 label-urgent = %index%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
+format-urgent-font = 3
 
 ; Separator in between workspaces
 ; label-separator = |
-label-separator-padding = 2
+label-separator-padding = 0
+
+;====================================================================================================================
 
 [module/mpd]
 type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+host = 127.0.0.1
+port = 6600
+format-online = %{A1:mpc toggle:}%{A2:mpc stop:}%{A3:mpc next:} <label-song> %{A}%{A}%{A}
+label-song = %artist% - %title%
+format-online-foreground = ${colors.foreground-alt}
+format-online-font = 3
+format-online-padding = 5
 
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
+icon-play =  ->>-
+icon-pause = -||- 
+interval = 2
 
-label-song-maxlen = 25
+label-song-maxlen = 250
 label-song-ellipsis = true
+
+;====================================================================================================================
+
+[module/playerctl]
+type = custom/script
+interval = 2
+exec = echo $(playerctl metadata -f '{{artist}} - {{title}}' 2>/dev/null | sed -E 's/(.{200}).+/\1.../')
+exec-if = playerctl metadata -f {{playerName}} 2>/dev/null | grep -v mopidy >/dev/null
+format-foreground = ${colors.foreground-alt}
+format-font = 3
+format-padding = 5
+
+;====================================================================================================================
 
 [module/cpu]
 type = internal/cpu
@@ -168,6 +196,8 @@ format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
 label = %percentage:2%%
 
+;====================================================================================================================
+
 [module/memory]
 type = internal/memory
 interval = 2
@@ -176,21 +206,25 @@ format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #4bffdc
 label = %percentage_used%%
 
+;====================================================================================================================
+
 [module/wlan]
 type = internal/network
 interface = wlp8s0
-interval = 3.0
+interval = 2.0
 
 format-connected =  <label-connected>
 format-connected-underline = #9f78e1
-label-connected =    %essid%
+label-connected =  %downspeed:8%  ▼▲ %upspeed:7%
+format-connected-foreground = ${colors.foreground-alt}
+format-connected-font = 3
+format-connected-padding = 1
 
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
+format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+label-disconnected = %ifname% offline
+label-disconnected-foreground = ${colors.warn}
+format-disconnected-padding = 1
 
 ramp-signal-0 = 
 ramp-signal-1 = 
@@ -199,52 +233,75 @@ ramp-signal-3 = 
 ramp-signal-4 = 
 ramp-signal-foreground = ${colors.foreground-alt}
 
+;====================================================================================================================
+
 [module/eth]
 type = internal/network
-interface = enp10s0
+interface = enp2s0f0u7
 interval = 3.0
 
-format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
+format-connected =  <label-connected>
+format-connected-underline = #9f78e1
+label-connected =  %downspeed:8%  ▼▲ %upspeed:7%
+format-connected-foreground = ${colors.foreground-alt}
+format-connected-font = 3
+format-connected-padding = 1
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
+format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+label-disconnected = %ifname% offline
+label-disconnected-foreground = ${colors.warn}
+format-disconnected-padding = 1
+
+;====================================================================================================================
 
 [module/date]
 type = internal/date
 interval = 5
 
-date = %a  %d  %b 
-date-alt = " %Y-%m-%d"
-
-time =    %H  %M     
-time-alt = %H:%M:%S
+date = %A %d %b 
+date-alt = "%Y - Week %W"
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #0a6cf5
 
-label = %date%   %time%
-format-padding = 10
-format-font = 1
+label = %date%  
+format-padding = 0
+format-font = 3
 
+;====================================================================================================================
+
+[module/time]
+type = internal/date
+interval = 5
+
+time =   %H %M     
+time-alt =
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #0a6cf5
+
+label =  %time%
+format-padding = 2
+format-font = 5
+
+;====================================================================================================================
 
 [module/pulseaudio]
 type = internal/pulseaudio
 use-ui-max = true
 
-label-active-font = 2
+format-volume-padding = 15
+format-muted-padding = 15
 format-volume = <ramp-volume>    <label-volume>
 label-volume =   %percentage%
 label-volume-foreground = ${root.foreground}
 label-volume-font = 3
-label-muted = ﱝ muted
-label-muted-foreground = #666
+label-muted =  MUTED
+label-muted-foreground = ${colors.warn}
+label-muted-font = 3
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
@@ -265,6 +322,8 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
+
+;====================================================================================================================
 
 [module/alsa]
 type = internal/alsa
@@ -294,6 +353,7 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
+;====================================================================================================================
 
 [module/powermenu]
 type = custom/menu
@@ -324,6 +384,8 @@ menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
 
+;====================================================================================================================
+
 [settings]
 screenchange-reload = true
 ;compositing-background = xor
@@ -332,9 +394,9 @@ compositing-foreground = source
 compositing-border = over
 pseudo-transparency = true
 
+;====================================================================================================================
+
 [global/wm]
-margin-top = 20
+margin-top = 22
 margin-bottom = 0
-
 ; vim:ft=dosini
-
