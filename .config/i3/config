@@ -10,10 +10,11 @@
 #╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 
 
-#font pango:Gohu GohuFont 8
+font pango:Gohu GohuFont 8
 # hide_edge_borders 	smart
 smart_borders on
 
+# set variables
 set $mod Mod4
 set $term alacritty
 set $menu ulauncher-toggle
@@ -22,6 +23,7 @@ set $browser firefox-developer-edition
 set $wallpaper $HOME/.wallpaper/tile-dark-01.png
 set $lock i3lock-fancy-rapid 45 50 pixel
 
+# autostart applications
 exec_always --no-startup-id numlockx &
 exec_always --no-startup-id feh --no-fehbg --bg-tile $wallpaper &
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh &
@@ -33,21 +35,27 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-xsettings &
 exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=ssh,secrets,pkcs11 &
 #exec --no-startup-id mousetrap -t 1 &
-exec --no-startup-id unclutter -root &
+exec --no-startup-id unclutter -root &12
 exec --no-startup-id xset s off -dpms &
 
+#set gaps
 exec_always --no-startup-id i3-msg gaps inner all set 25
 exec_always --no-startup-id i3-msg gaps outer all set 25
 
-# Use pactl to adjust volume in PulseAudio.
+# use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-bindsym XF86AudioPlay exec "mpc toggle"
-bindsym XF86AudioPrev exec "mpc prev"
-bindsym XF86AudioNext exec "mpc next"
+
+# use mediakeys to control playerctl apps : cmus ncspot
+bindsym XF86AudioPlay exec "playerctl play-pause"
+bindsym Alt+XF86AudioPlay exec "playerctl stop"
+bindsym XF86AudioPrev exec "playerctl previous"
+bindsym XF86AudioNext exec "playerctl next"
+bindsym Alt+XF86AudioNext exec "playerctl position 10+"
+bindsym Alt+XF86AudioPrev exec "playerctl position 10-"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -59,13 +67,16 @@ bindsym $mod+Escape kill
 # start a terminal
 bindsym $mod+Return exec $term
 #bindsym $mod+Shift+Return exec $termcwd1
+
+# make a blank space
 bindsym $mod+Shift+Return open
 
+# common app shortcuts
 bindsym $mod+d exec $menu
 bindsym $mod+f exec $browser
 bindsym $mod+e exec $files
 
-# alternatively, you can use the cursor keys:
+# window selection and movement
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
@@ -75,7 +86,7 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
+# tiling orientations
 bindsym $mod+0x3b splith
 bindsym $mod+0x27 splitv
 bindsym $mod+0x2f fullscreen toggle
@@ -95,15 +106,16 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+# switch between workspaces
 bindsym $mod+Tab workspace next_on_output
 bindsym $mod+Shift+Tab move container to workspace next_on_output; workspace next_on_output
-bindsym $mod+Alt+Tab workspace prev_on_output
+bindsym $mod+Ctrl+Tab workspace prev_on_output
+bindsym $mod+Shift+Ctrl+Tab move container to workspace prev_on_output; workspace prev_on_output
 bindsym Menu workspace next_on_output
 bindsym grave workspace next_on_output
 bindsym $mod+grave workspace prev_on_output
 
-# Define names for default workspaces for which we configure key bindings later on.
-# We use variables to avoid repeating the names in multiple places.
+# define names for workspaces
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -144,16 +156,13 @@ bindsym $mod+Home reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Insert restart
 # exit i3 (logs you out of your X session)
-#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# lock session
 bindsym $mod+Delete exec $lock
 
+# move window to scratchpad
 bindsym $mod+minus move scratchpad
 bindsym $mod+equal scratchpad show
-
-bindsym $mod+j exec i3-msg gaps outer all set 65
-bindsym $mod+Shift+h gaps outer current set 85px
-bindsym $mod+Shift+g gaps outer current set 10px 
-bindsym $mod+Shift+y gaps inner current set 10px
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -208,6 +217,10 @@ mode "(P)olybar  (I)3WM  (N)cmpcpp  (A)lacritty  Pi(c)om (Z)shalias" {
 }
 bindsym $mod+Shift+c mode "(P)olybar  (I)3WM  (N)cmpcpp  (A)lacritty  Pi(c)om (Z)shalias"
 
+bindsym $mod+j exec i3-msg gaps outer all set 65
+bindsym $mod+Shift+h gaps outer current set 85px
+bindsym $mod+Shift+g gaps outer current set 10px 
+bindsym $mod+Shift+y gaps inner current set 10px
 
 mode "gaps" {
 	bindsym plus gaps inner all plus 10
