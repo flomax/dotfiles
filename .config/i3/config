@@ -21,7 +21,9 @@ set $menu ulauncher-toggle
 set $files nemo
 set $browser firefox-developer-edition
 set $wallpaper $HOME/.wallpaper/tile-dark-01.png
-set $lock i3lock-fancy-rapid 45 50 pixel
+set $lock $HOME/.config/i3/script/lock.bash
+set $soff xrandr --output DP-0 --off
+set $son xrandr --output DP-0 --auto
 
 # autostart applications
 exec_always --no-startup-id numlockx &
@@ -38,7 +40,7 @@ exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=ssh,secr
 exec --no-startup-id unclutter -root &12
 exec --no-startup-id xset s off -dpms &
 
-#set gaps
+# set gaps
 exec_always --no-startup-id i3-msg gaps inner all set 25
 exec_always --no-startup-id i3-msg gaps outer all set 25
 
@@ -51,13 +53,13 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
 # use mediakeys to control playerctl apps : cmus ncspot
 bindsym XF86AudioPlay exec "playerctl play-pause"
-bindsym Alt+XF86AudioPlay exec "playerctl stop"
+bindsym Shift+XF86AudioPlay exec "playerctl stop"
 bindsym XF86AudioPrev exec "playerctl previous"
 bindsym XF86AudioNext exec "playerctl next"
-bindsym Alt+XF86AudioNext exec "playerctl position 10+"
-bindsym Alt+XF86AudioPrev exec "playerctl position 10-"
+bindsym Shift+XF86AudioNext exec "playerctl position 10+"
+bindsym Shift+XF86AudioPrev exec "playerctl position 10-"
 
-# Use Mouse+$mod to drag floating windows to their wanted position
+# Use mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # kill focused window
@@ -153,9 +155,9 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # reload the configuration file
 bindsym $mod+Home reload
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Insert restart
-# exit i3 (logs you out of your X session)
 
 # lock session
 bindsym $mod+Delete exec $lock
@@ -163,6 +165,13 @@ bindsym $mod+Delete exec $lock
 # move window to scratchpad
 bindsym $mod+minus move scratchpad
 bindsym $mod+equal scratchpad show
+
+# send selected text/url to qr code
+bindsym $mod+Print exec xclip -selection clipboard -o | qrencode -o - | feh -FZ -
+
+# turn the screen on and off
+bindsym $mod+Ctrl+8 exec $soff
+bindsym $mod+Ctrl+9 exec $son
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -203,14 +212,13 @@ for_window [window_type="menu"] floating enable
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 
-# Create Log out, Reboot, Poweroff bindings
+# create binding menu for dotfiles editing
 mode "(P)olybar  (I)3WM  (N)cmpcpp  (A)lacritty  Pi(c)om (Z)shalias" {
         bindsym p exec --no-startup-id alacritty -e micro ~/.config/polybar/config
         bindsym i exec --no-startup-id alacritty -e micro ~/.config/i3/config
         bindsym n exec --no-startup-id alacritty -e micro ~/.config/ncmpcpp/config
         bindsym a exec --no-startup-id alacritty -e micro ~/.config/alacritty/alacritty.yaml
         bindsym c exec --no-startup-id alacritty -e micro ~/.config/picom/picom.conf
-        bindsym z exec --no-startup-id alacritty -e micro ~/.zsh/zshalias
         bindsym q mode "default"
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -222,6 +230,7 @@ bindsym $mod+Shift+h gaps outer current set 85px
 bindsym $mod+Shift+g gaps outer current set 10px 
 bindsym $mod+Shift+y gaps inner current set 10px
 
+# create binding menu for adjusting gaps
 mode "gaps" {
 	bindsym plus gaps inner all plus 10
 	bindsym Shift+plus gaps inner all plus 10
@@ -236,23 +245,15 @@ mode "gaps" {
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
-
 bindsym $mod+Shift+plus mode "gaps"
 
-
-# Create Log out, Reboot, Poweroff bindings
-mode "(S)uspend, (L)ogout, (R)eboot, (P)oweroff" {
+# create binding menu for System controls
+mode "(H)ibernate, (L)ogout, (R)eboot, (P)oweroff" {
         bindsym r exec --no-startup-id systemctl reboot
-        bindsym s exec --no-startup-id exec $lock & systemctl suspend; mode "default"
+        bindsym h exec --no-startup-id exec $lock & systemctl hibernate; mode "default"
         bindsym l exit
         bindsym p exec --no-startup-id systemctl poweroff
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-bindsym $mod+Shift+e mode "(S)uspend, (L)ogout, (R)eboot, (P)oweroff"
-
-#bar {
-#    position top
-#    status_command /home/loki/venv/bin/i3pyblocks -c /home/loki/venv/bin/config.py
-#    font pango:Gohu GohuFont 8
-#}
+bindsym $mod+Shift+e mode "(H)ibernate, (L)ogout, (R)eboot, (P)oweroff"
