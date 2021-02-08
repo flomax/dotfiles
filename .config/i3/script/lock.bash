@@ -1,0 +1,35 @@
+#/bin/sh
+
+i3lock \
+--image /home/loki/.wallpaper/lock-solar.png \
+--show-failed-attempts \
+--ignore-empty-password \
+--composite \
+--pass-media-keys \
+--pass-screen-keys \
+--force-clock \
+--timepos="x+240:h-620" \
+--time-font="Ubuntu" \
+--timesize="66" \
+--datesize="28" \
+--veriftext="" \
+--wrongtext="fail :(" \
+--noinputtext="" \
+--timecolor="#001C2Dff" \
+--datecolor="#001C2Dff" \
+--datestr="%A %b %d" \
+--indpos="x+1522:h-643" \
+--radius="121" \
+--ring-width="11" \
+--ringcolor="#081720ff" \
+--linecolor="#1B2533ff" \
+--insidecolor="#001C2Dff" \
+--insidevercolor="#E27C3300" \
+--verifcolor="#6D7188dd" \
+--insidewrongcolor="#00000000" \
+--ringwrongcolor="#ff0000ff" \
+--wrongcolor="#E36666ff" \
+--ringvercolor="#4C2644ff" \
+--bshlcolor="#0A37A8cc" \
+--line-uses-inside -c"#00000000" \
+--keyhlcolor="#E76622ff"
